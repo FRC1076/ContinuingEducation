@@ -1,5 +1,9 @@
 def permutor(text, permutation):
-    pass
-
+    scrambled = ""
+    for x in permutation:
+        scrambled = scrambled + text[x]
+    return scrambled
+    
 def decoder(permutator):
     pass
+
