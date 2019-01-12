@@ -1,6 +1,8 @@
 def permutor(text, permutation):
     """
-    The permutor function has two arguements. It takes the text and scrambles it according to what's inputted into the permutation arguement.
+    The permutor function has two arguements.
+    It takes the text and scrambles it according to
+    the permutation arguement.
     """
     scrambled = ""
     for x in permutation:
