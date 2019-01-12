@@ -3,7 +3,6 @@ def permutor(text, permutation):
     for x in permutation:
         scrambled = scrambled + text[x]
     return scrambled
-    
+
 def decoder(permutator):
     pass
-
