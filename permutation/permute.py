@@ -10,4 +10,8 @@ def permutor(text, permutation):
     return scrambled
 
 def decoder(permutator):
-    pass
+    def decoder(permutation):
+    depermutation = []
+    for x in range (0, len (permutation)):
+        depermutation.append (permutation.index(x))
+    return depermutation
