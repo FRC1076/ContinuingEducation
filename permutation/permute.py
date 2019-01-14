@@ -2,7 +2,7 @@ def permutor(text, permutation):
     """
     The permutor function has two arguements.
     It takes the text and scrambles it according to
-    the permutation arguement.
+    the permutation argument.
     """
     scrambled = ""
     for x in permutation:
@@ -22,9 +22,18 @@ def decoder(permutation):
 
 def permutation_is_valid(permutation):
     """
-    Return True if all of the elements of permutation appropriate
-    for the length are present.  Otherwise return False.  Note,
+    Return True if all of the elements of permutation
+    are present.  Otherwise return False.  Note,
     the empty array is a valid permutation.
+    (works for an empty string)
+    """
+    pass
+
+def get_permutatation_by_length(length, permutation_set):
+    """
+    A permutation set is an array of permutations.  Element i
+    of the permutation array is the permutation for a string
+    of length i.
     """
     pass
 
@@ -43,6 +52,8 @@ def permute_sentence(sentence, permutation_set):
     'These are the times that try folks souls.'
 
     Remember, this is like an accumulate with a loop kind of function.
-    Just using some of the above functions.
+    Just using some of the above functions to permute each word (using
+    the appropriate permutor for the word length, and then
+    joining them back into a sentence.
     """
     pass
