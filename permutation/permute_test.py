@@ -1,7 +1,6 @@
 import unittest
 
-from permute import permutor as permutor
-from permute import decoder as decoder
+from permute import permutor, decoder, permutation_is_valid
  
 class PermutationTest(unittest.TestCase):
     def test_permutor_Hello(self):
@@ -25,7 +24,28 @@ class PermutationTest(unittest.TestCase):
     def test_round_trip(self):
         p9 = [ 2, 5, 6, 3, 8, 1, 4, 0, 7 ]
         text = 'NineChars'
-        self.assertEqual(permutor(permutor(text,p9), decoder(p9)), text) 
+        self.assertEqual(permutor(permutor(text,p9), decoder(p9)), text)
+
+    def test_round_trip_empty(self):
+        p = [ ]
+        text = ""
+        self.assertEqual(permutor(permutor(text, p), decoder(p)), text)
+
+    def test_permutation_missing_one_extra_two(self):
+        p = [ 0, 2, 2 ]
+        self.assertEqual(permutation_is_valid(p), False)
+
+    def test_permutation_missing(self):
+        p = [ 3, 2, 4, 5 ]
+        self.assertEqual(permutation_is_valid(p), False)
+
+    def test_permutation_valid_empty(self):
+        p = [ ]
+        self.assertEqual(permutation_is_valid(p), True)
+
+    def test_permutation_valid_8_long(self):
+        p = [ 2, 1, 4, 5, 3, 7, 6, 0 ]
+        self.assertEqual(permutation_is_valid(p), True)
 
 if __name__ == '__main__':
     unittest.main()
