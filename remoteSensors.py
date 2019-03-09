@@ -38,9 +38,12 @@ class RangeSensor:
     def __init__(self, sensor_ip, listen_port):
         self.sonar_ip = sensor_ip
         self.range_cm = 0
+        self.listening = True
+        self.t = Thread(target = RangeSensor.receivePackets, args=(self,))
+        self.t.start()
 
-        t = Thread(target = RangeSensor.receivePackets, args=(self,))
-        t.start()
+    def stop(self):
+        self.listening = False
 
     def pidGet(self):
         # return cached value that was last receive from
@@ -51,12 +54,14 @@ class RangeSensor:
         """
         Run a continuous loop in this function that
         """
-        for i in range(10):
+        i = 0
+        while self.listening:
+            i += 1
             pkt = do_some_blocking_io(i)
             self.range_cm = contents(pkt)
 
 def do_some_blocking_io(x):
-    print("Blocking operation started...")
+    print("Blocking operation started.  Each takes 5 seconds.")
     sleep(5)
     print("Blocking operation ended..")
     return x
@@ -65,11 +70,16 @@ def contents(p):
     return p
 
 def main():
+    """
+    Pretend this is a robot init + loop (with 1 second period)
+    """
     rs = RangeSensor('10.10.76.9', 8813)
 
-    for i in range(100):
+    for i in range(25):
         print("Range reading is {}".format(rs.pidGet()))
         sleep(1)
+
+    rs.stop()
 
 if __name__ == "__main__":
     main()
