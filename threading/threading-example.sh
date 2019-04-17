@@ -42,3 +42,25 @@ Doing the essential in second 16
 Doing the essential in second 17
 Doing the essential in second 18
 Doing the essential in second 19
+
+
+
+
+# if you want to try this, just open up a python shell and
+# paste this in.
+from threading import Thread
+from time import sleep
+def do_this_for_n_that_for_m_and_then_something(n, m):
+    print("Started doing THIS for {} seconds".format(n))
+    sleep(n)
+    print("Now doing THAT for {} seconds".format(m))
+    sleep(m)
+    print("Now doing SOMETHING")
+
+# robot loop does something essential every second
+for loopCount in range(20):
+    if loopCount == 3:
+        thr = Thread(target=do_this_for_n_that_for_m_and_then_something, args=(5, 7))
+        thr.start()
+    print("Doing the essential in second {}".format(loopCount))
+    sleep(1)
