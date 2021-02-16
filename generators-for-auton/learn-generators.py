@@ -21,6 +21,10 @@ def yesman0():
 ygen = yesman0()
 print("This is a generator object: {}".format(ygen))
 
+
+# In[ ]:
+
+
 # generator object handles next() and runs until it encounters the next yield keyword
 next(ygen)    #  prints yes1 and then returns at first yield
 next(ygen)    #  continues from there, printing yes2 and returning at second yield
@@ -93,7 +97,7 @@ for _ in always_yes():
 
 
 #  generators can return things that the caller can use
-#  Return values using yield command, yield <return-value>
+#  Return values using the "yield" command, e.g. yield <return-value>
 def infinite_yeses():
     while True:
         yield "yes"
@@ -193,7 +197,7 @@ class FakeDriveTrain:
 #
 #  So, now you have a framework for doing a task with given arguments
 #  (so far, only printing a string, but we can make it more sophisticated)
-#  Once time, expires, the loop ends, and the drivetrain is stopped.   (usually a good thing)
+#  Once time expires, the loop ends, and the drivetrain is stopped.   (usually a good thing)
 #
 def timed_arcadedrive(duration, drivetrain, forward, rotate):
     stop_time = time.time() + duration
@@ -206,7 +210,9 @@ dt = FakeDriveTrain("arcade")
 drive_auton = timed_arcadedrive(5, dt, 1.0, 0)
 
 for _ in drive_auton:
-    time.sleep(1)
+    time.sleep(1.0)
+
+    
 
 
 # In[ ]:
@@ -230,7 +236,6 @@ class AutoTask:
     def do_step(self):
         pass
     
-    def 
 
 class AutoArcade(AutoTask):
     def __init__(self, train, forward, rotate):
@@ -277,9 +282,9 @@ for _ in auton:
 
 
 # We can assemble things compactly (with labels) so that
-# the plan is more clear
+# the plan is more clear and fits on a single line
 
-for _ in timed_task(duration=7, AutoArcade(train=dt, forward=1.0, rotate=0.1)):
+for _ in timed_task(duration=7, task=AutoArcade(train=dt, forward=1.0, rotate=0.1)):
     time.sleep(3.5)
 
 
@@ -372,7 +377,7 @@ def timed_task(duration, task):
 
 #
 # 
-# readings will be 9, 8, 7, 6, 5, 4, .... 0
+# readings will be 9, 8, 7, 6, 5, 4, .... 0, 0, 0  ouch, ouch, ouch
 #
 us = FakeUltraSonic(iter(range(9, 0, -1)))
 dt = FakeDriveTrain("FAKE-FOR-US-AUTON")
@@ -414,8 +419,8 @@ for _ in timed_task(3, drivetask):
 #  timed_task wrapper could just "yield from task.do_step()" and the subtask
 #  could finish generating when it is done.    Then the rule for building
 #  auton tasks is that they are generators, and they stop generating when
-#  the reach their objective.   The timed_task wrapper can stop them when
-#  their alloted time expires.
+#  they reach their objective.   The timed_task wrapper can stop them when
+#  their alloted time expires. (in the event they don't reach their objective)
 #
 #  This can really simplify the writing of autonomous tasks, but it does
 #  mean the infrastructure has to be a bit more sophisticated.    This is
@@ -444,7 +449,10 @@ def finish():
 
 def ideal_auton_run():
     """
-    Define the function that will create the generator
+    Define the function that will create the generator.
+    Return the generator to be the "body" of the task.
+    This way, everything does an initialize(), the generator,
+    and then the finish().
     """
     def the_generator():
         for i in range(10):

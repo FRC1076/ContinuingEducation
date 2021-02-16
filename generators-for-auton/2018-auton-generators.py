@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+
+
 import time
 
 class drivetrain:
@@ -5,14 +11,26 @@ class drivetrain:
     This dummy drivetrain does not really drive, but that
     works out okay for learning.
     """
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
 
-    def arcadeDrive(self, forward, rotate):
-        print("Driving forward {} rotating {}".format(forward, rotate))
+    def driveArcade(self, forward, rotate):
+        if forward == 0 and rotate == 0:
+            print("{} is NOT MOVING".format(self.name))
+        else:
+            print("Driving {} forward {} and rotating {}".format(self.name, forward, rotate))
     
     def stop(self):
-        print("STOPPED Driving")
+        print("STOPPED {}".format(self.name))
+        
+
+dt = drivetrain("JustPretending")
+dt.driveArcade(0.5, 0.5)
+dt.driveArcade(0, 0)
+dt.stop()
+
+
+# In[ ]:
 
 
 class BaseAutonomous:
@@ -32,7 +50,7 @@ class BaseAutonomous:
 
     def run(self):
         """
-        Define a function to yield and then end, so we
+        Define a function to yield and then end(), so we
         can return a generator.
         So run() always does an init, then it returns a generator
         that does all of the execute() and then the end().
@@ -40,6 +58,7 @@ class BaseAutonomous:
         def _execute():
             yield from self.execute()
             self.end()
+        # Lifecycle of task (init(), step**, end())
         self.init()
         return _execute()
 
@@ -47,13 +66,16 @@ class Timed(BaseAutonomous):
     """
     Takes an auton task and a duration as argument
     Runs the auton task until it either ends or until
-    the duration time ends.
+    the duration time expires.
     """
     def __init__(self, auto, duration):
         self.auto = auto
         self.duration = duration
 
     def init(self):
+        """
+        initialize the child task and ourselves
+        """
         self.auto.init()
         self.end_time = time.time() + self.duration
 
@@ -61,8 +83,8 @@ class Timed(BaseAutonomous):
         """
         Run the task execution steps until it ends (stops
         iteration)
-        Otherwise, check if it has run out of time and
-        break out of the loop.
+        If there are more steps left, break out of the
+        loop if it has run out of time.
         """
         for _ in self.auto.execute():
             if time.time() > self.end_time:
@@ -96,7 +118,7 @@ class ArcadeDriveDeadReckon(BaseAutonomous):
         are close to a target, or if we just bumped into something.
         """
         while True:
-            self.drivetrain.arcadeDrive(self.forward, self.rotate)
+            self.drivetrain.driveArcade(self.forward, self.rotate)
             yield
 
     def end(self):
@@ -117,9 +139,10 @@ def robotAuton(train):
     
 print("Create the drivetrain")
 # create the drivetrain for auton to use
-dt = drivetrain()
+dt = drivetrain("JustPretending")
 # create the generator that generates auton steps
 auton = robotAuton(dt)
+print("auton is: {}".format(auton))
 
 """
 For learning purposes each robot step is 1 second long.
@@ -134,7 +157,14 @@ for step in range(0,15):
     """
     try:
         next(auton)
-    except:
+    except StopIteration:
         dt.stop()
 
     time.sleep(1)
+
+
+# In[ ]:
+
+
+
+
