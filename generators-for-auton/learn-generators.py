@@ -177,7 +177,6 @@ for answer in momentary_answerman("maybe", 3):
 # of robots to do testing.     These are stubs that stand-in for real robot
 # functions, but just print messages, so we know what is happening.
 
-
 class FakeDriveTrain:
     """
     Fake drivetrain is just a stand-in for a real drivetrain.
@@ -464,9 +463,10 @@ def ideal_auton_run():
     return the_generator()
 
 
-auton = ideal_auton_run()
+auton = ideal_auton_run()   #  initialize happens here now!
 for _ in auton:
     time.sleep(1.0)
+#  and finish() will always be called just as the loop completes
 
 
 # In[ ]:
