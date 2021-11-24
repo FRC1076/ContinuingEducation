@@ -15,7 +15,12 @@ class Adc:
      layer of service.
     """
     def __init__(self):
-        # Get I2C bus
+        #
+        # Get I2C bus  (smbus interface is mostly compatible with I2C bus
+        # See:   https://www.electronicshub.org/basics-i2c-communication/
+        # Note: I2C is a standard that is used for *tons* of chips, so a
+        # microcontroller can "talk" to all of those chips using
+        # the smbus interface.
         self.bus = smbus.SMBus(1)
         
         # I2C address of the device
@@ -24,8 +29,10 @@ class Adc:
         # PCF8591 Command
         # See the data sheet for this chip at:
         #     https://www.nxp.com/docs/en/data-sheet/PCF8591.pdf
-        # Notice can also convert digital to analog signals
-        # that is why there is a write method.
+        # Notice this chip can also work in reverse.
+        # It can convert digital to analog signals
+        # that is why there is a write method. (see below)
+        #
         self.PCF8591_CMD                        =0x40  #Command
         
         # ADS7830 Command
@@ -47,8 +54,9 @@ class Adc:
                 self.Index="ADS7830" 
     def analogReadPCF8591(self,chn):#PCF8591 read ADC value,chn:0,1,2,3
         """
-        Read 9 times, sort the results and return the median.
-        This helps smooth out the readings, maybe increasing accuracy.
+        Read 9 values in quick succession.
+        Sort the results and return the median.
+        This helps smooth out the readings, eliminating glitches (noise).
         """
         value=[0,0,0,0,0,0,0,0,0]
         for i in range(9):
@@ -57,20 +65,25 @@ class Adc:
         return value[4]   
         
     def analogWritePCF8591(self,value):#PCF8591 write DAC value
+        """
+        If the smbus sends a Write command, the chip will generate a
+        an analog voltage of the specified value.  (This is referred
+        as a DAC (Digital To Analog) conversion. 
+        """
         self.bus.write_byte_data(self.ADDRESS,cmd,value)
         
     def recvPCF8591(self,channel):#PCF8591 write DAC value
         """
         Read until two successive values are equal.   This will miss
-        any short spikes.
+        any short spikes, and maybe remove some noise.
         """
         while(1):
             value1 = self.analogReadPCF8591(channel)   #read the ADC value of channel 0,1,2,
             value2 = self.analogReadPCF8591(channel)
             if value1==value2:
                 break;
-        voltage = value1 / 256.0 * 3.3  #calculate the voltage value
-        voltage = round(voltage,2)
+        voltage = value1 / 255.0 * 3.3  # scale from 0-255 to 0-3.3
+        voltage = round(voltage,2)      # keep 2 decimal places
         return voltage
     def recvADS7830(self,channel):
         """Select the Command data from the given provided value above"""
@@ -100,7 +113,9 @@ class Adc:
             data=self.recvADS7830(channel)
         return data
     # This function is not used in the test code (and there is no
-    # matching (open statement for the sbus (i2c bus))
+    # matching open statement for the sbus (i2c bus))   There maybe
+    # should be, especially if there are more than one leader device
+    # on the i2c bus.  (things get too complicated at that point)
     def i2cClose(self):
         self.bus.close()
 

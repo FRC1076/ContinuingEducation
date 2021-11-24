@@ -4,7 +4,7 @@ class FluxMeter:
     interface that is more like what robot.py needs to use.    Recall
     that the FluxMeter is a sensor that measures etherial flux density
     on a scale of 0 to 1.0, but the fm2319 flux meter chip actually
-    measures the flux on a scale from 0 to 5.0
+    measures the flux on a scale from 0 to 3.3
 
     Usage:
         in robotInit, create the FluxMeter attached to the appropriate pin or port
@@ -24,11 +24,11 @@ class FluxMeter:
     between the left and right FluxMeter.    The left flux meter is connected to port
     number 3 on the ADC, and the right is connected to port 4.
     So, you can use the same values when creating the FluxMeter, and then
-    use them to read from the correct ADC port that connects to desired
+    use them to read from the correct ADC port that connects to the desired
     Acme fm2319.
 
-    Note that the code that you write, and even the code that you use might
-    have almost nothing to do with the fm2319 chip.
+    Note that the code that you write, and even the code that you wrap might
+    have nothing to do with the fm2319 chip.
 
     This is because the Pi uses a certain set of pins to connect over
     what is called an I2C bus.    It uses the I2C bus to send commands to
