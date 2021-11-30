@@ -45,7 +45,7 @@ class FluxMeter:
 
     def getFlux(self):
         """
-        Use the wrapped data to get to the underlying adc
+        Use the wrapped adc device to get to the meter output
         """
         return self.adc.recvADC(self.port_number)
 
@@ -56,6 +56,9 @@ class FluxMeter:
 #  If the file is imported, this stuff does not get executed.
 #  So run it directly to test it out, and import it to use
 #  the library.
+#
+#  NOTE:   This used Freenove library capabilities, so if you want
+#  to test it, you'll want to run it on a Freenove robot.
 #
 if __name__ == "__main__":
 
