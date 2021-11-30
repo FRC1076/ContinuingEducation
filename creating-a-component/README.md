@@ -20,9 +20,7 @@ I'm not saying you should give up on trying to understand these
 things, only that you cannot wait until you understand everything
 before you do anything, lest you ultimately do nothing.
 
-
-It is reasonable that the first in creating a software component is
-to decide on what its interface will be.   In our case, we need
+The first in creating a software component is often to decide on what its interface will be.   In our case, we need
 to focus on how to create the component, and how to manipulate the
 device controlled by the component.
 
@@ -33,24 +31,24 @@ You can ask others to give you feedback on the interface, and, hopefully
 settle on a name that fits in and is properly descriptive.
 
 While making this repository, I changed several names as I worked.
-Always be thinking about names.
+Always be thinking about using the right/best names.
 
 Naming things carefully is actually important, and one of the two most
 difficult things in computer science.  The other is cache-coherency and
 off-by-one errors.
 
 Here are the files for your enjoyment and enlightenment.   You can
-work through thiem in this order, and things will mostly make sense.
+work through thiem in this order, and things should mostly make sense.
 
-FluxMeter_stub.py  --   write a stub for a component and even test it
-Adc.py             --   Freenove (a.k.a Acme) annotated code for reading data from
-                        an Analog to Digital Converter chip
-diagrams.pdf       --   the hardware view of the Freenove FluxMeter solution
-FluxMeter_wrap.py  --   add implementation that uses lower layers
-diagrams.pdf       --   the software view of the Freenove FluxMeter solution
-FluxMeter_on_RIO_stub.py  -- write a stub for a FluxMeter used by RoboRio
-diagrams.pdf       --   the hardware view of the RIO FluxMeter solution
-FluxMeter_on_RIO_wrap.py  -- write the implementation using wpilib fake
-diagrams.pdf       --   the software view of the RIO FluxMeter solution
-FluxMeter_improved.py  -- the final version of Freenove solution that reflects the
-                          structure preferred for FRC code on the RIO
+* FluxMeter_stub.py  --   write a stub for a component and even test it
+* Adc.py             --   Freenove (a.k.a Acme) annotated code for reading data from
+                          an Analog to Digital Converter chip
+* diagrams.pdf       --   the hardware view of the Freenove FluxMeter solution
+* FluxMeter_wrap.py  --   add implementation that uses lower layers
+* diagrams.pdf       --   the software view of the Freenove FluxMeter solution
+* FluxMeter_on_RIO_stub.py  -- write a stub for a FluxMeter used by RoboRio
+* diagrams.pdf       --   the hardware view of the RIO FluxMeter solution
+* FluxMeter_on_RIO_wrap.py -- write the implementation using wpilib fake
+* diagrams.pdf       --   the software view of the RIO FluxMeter solution
+* FluxMeter_improved.py  -- the final version of Freenove solution that reflects the
+                            structure preferred for FRC code on the RIO
