@@ -4,7 +4,7 @@ class FluxMeter:
     interface that is more like what robot.py needs to use.    Recall
     that the FluxMeter is a sensor that measures etherial flux density
     on a scale of 0 to 1.0, but the fm2319 flux meter chip actually
-    measures the flux on a scale from 0 to 3.3
+    measures the flux on a scale from 0 to 5.0
 
     Usage:
         in robotInit, create the FluxMeter attached to the appropriate pin or port
