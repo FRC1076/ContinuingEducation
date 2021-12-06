@@ -32,8 +32,9 @@ Notice that it has the same function, but
 it completely hides the ugly class from the user.
 
 We want to Adapt most of the Freenove library elements
-using classes that are part of the wpilib library.
-That was, the Freenove can serve as a platform to learn
-how to program the competition robot.
+using the same class names and methods that are used by the wpilib library.
+That way, the Freenove can serve as a platform to learn
+how to program the competition robot using something as similar as possible
+as wpilib.
 
 
