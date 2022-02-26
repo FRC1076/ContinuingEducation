@@ -1,0 +1,67 @@
+import wpilib
+import Enum
+
+js_events = { 1 : ["AButtonPressed"],   10 : ["AButtonPressed","BButtonPressed"],    13 : ["AButtonPressed"] }
+
+class MockJS:
+    """
+    Joystick with preloaded or forced events
+    """
+    def __init__(self, port_number, events):
+        self.events = events
+        self.event = None
+        self.loop_index = 0
+
+    def force_event(self, event)
+        self.event = event
+
+    def periodic(self):
+        try:
+            self.event = events[self.loop_index]
+        except IndexError:
+            pass
+        self.loop_index = self.loop_index + 1
+
+    def getAButtonPressed(self):
+        return "AButtonPressed" in self.event
+
+    def getBButtonPressed(self):
+        return "BButtonReleased" in self.event
+
+
+class MockDS:
+    """
+    MockDS takes a certain number of robot cycles to set or reset
+    """
+    def __init__(self, can_id, model, fwd_chan, rev_chan):
+        self.state = kOff
+        self.position = 0
+
+    def set(self, state):
+        self.state = state
+
+    def get(self, state):
+        return self.state
+
+class Pusher:
+
+    def __init__(self, fwd_chan, rev_chan):
+        self.piston = self.doubleSolenoid(0, 0, fwd_chan, rev_chan)
+        self.piston.set(kOff)
+        
+    def pushOut(self):
+        self.piston.set(kForward)
+
+    def pullBack(self):
+        self.piston.set(kReverse)
+
+
+if __name__ == "__main__":
+
+    
+    
+
+    
+
+
+        
